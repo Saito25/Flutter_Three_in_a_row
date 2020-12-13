@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 void main() {
-  debugPaintSizeEnabled = true;
-  debugPaintLayerBordersEnabled = true;
   runApp(MyApp());
 }
 
@@ -117,16 +115,16 @@ class GameTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget _iconToShow = (tileStatus == 0
         ? null
-        : (tileStatus == 1 ? Icon(Icons.cancel_outlined) : Icon(Icons.cancel)));
+        : (tileStatus == 1 ? Icon(Icons.cancel_outlined, size: 50.0,) : Icon(Icons.cancel, size: 50.0)));
 
     return GestureDetector(
       onTap: _handleStatus,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[300],
+          color: Colors.red[300],
           border: Border.all(color: Colors.black87, width: 1.5),
         ),
-        child: _iconToShow,
+        child: Center(child: _iconToShow),
       ),
     );
   }
