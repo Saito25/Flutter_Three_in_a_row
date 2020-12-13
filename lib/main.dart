@@ -33,12 +33,11 @@ class _GameBoardState extends State<GameBoard> {
   int _rowsXColumns2;
   int _turn = 1;
 
-  void _handleTilesStatus(int axisX, int axisY) {
-    print(_tilesStatus);
+  void _handleTilesStatus(int axisY, int axisX) {
     setState(() {
       _turn % 2 != 0
-          ? _tilesStatus[axisX][axisY] = 1
-          : _tilesStatus[axisX][axisY] = 2;
+          ? _tilesStatus[axisY][axisX] = 1
+          : _tilesStatus[axisY][axisX] = 2;
       _turn++;
     });
   }
@@ -47,7 +46,6 @@ class _GameBoardState extends State<GameBoard> {
   void initState() {
     _tilesStatus = List.generate(
         widget._rowsXColumns, (index) => List.filled(widget._rowsXColumns, 0));
-    print(_tilesStatus);
     _rowsXColumns2 = widget._rowsXColumns;
     super.initState();
   }
@@ -65,8 +63,8 @@ class _GameBoardState extends State<GameBoard> {
   List<Widget> generateGameBoard(int rowNumbers) {
     List<Widget> rowsList = [];
 
-    for (int i = 0; i < rowNumbers; i++) {
-      rowsList.add(rowGenerator(i, rowNumbers));
+    for (int y = 0; y < rowNumbers; y++) {
+      rowsList.add(rowGenerator(y, rowNumbers));
     }
 
     return rowsList;
@@ -74,14 +72,14 @@ class _GameBoardState extends State<GameBoard> {
 
   Widget rowGenerator(int axisY, tileNumbers) {
     List<Widget> tilesList = [];
-    for (int i = 0; i < tileNumbers; i++) {
+    for (int x = 0; x < tileNumbers; x++) {
       tilesList.add(
         Expanded(
           child: GameTile(
             onChange: _handleTilesStatus,
-            axisX: i,
+            axisX: x,
             axisY: axisY,
-            tileStatus: _tilesStatus[i][axisY],
+            tileStatus: _tilesStatus[axisY][x],
           ),
         ),
       );
@@ -105,9 +103,8 @@ class GameTile extends StatelessWidget {
       : super(key: key);
 
   void _handleStatus() {
-    print('S: $tileStatus, X: $axisX, Y: $axisY');
     if (tileStatus == 0) {
-      onChange(axisX, axisY);
+      onChange(axisY, axisX);
     }
   }
 
